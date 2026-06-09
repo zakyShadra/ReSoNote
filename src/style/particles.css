@@ -1,0 +1,92 @@
+.particles-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: auto;
+  z-index: 10;
+  overflow: hidden;
+}
+
+/* ── SUMMER LEAVES ── */
+.particles-container.summer {
+  background: linear-gradient(135deg, #FFF5E6 0%, #FFE8CC 100%);
+}
+
+.leaf {
+  position: absolute;
+  top: -20px;
+  font-size: 2rem;
+  opacity: 1;
+  animation: fall-leaf var(--duration, 5s) linear var(--delay, 0s) forwards infinite;
+  will-change: transform, opacity;
+  cursor: pointer;
+  user-select: none;
+}
+
+@keyframes fall-leaf {
+  0% {
+    top: -20px;
+    opacity: 1;
+    transform: rotate(0deg) translateX(0);
+  }
+  25% {
+    transform: rotate(90deg) translateX(30px);
+  }
+  50% {
+    transform: rotate(180deg) translateX(-30px);
+  }
+  75% {
+    transform: rotate(270deg) translateX(30px);
+  }
+  100% {
+    top: 100vh;
+    opacity: 0;
+    transform: rotate(360deg) translateX(0);
+  }
+}
+
+/* ── SNOW ── */
+.particles-container.snow {
+  background: linear-gradient(135deg, #E8F4F8 0%, #D4EBF5 100%);
+}
+
+.snowflake {
+  position: absolute;
+  top: -20px;
+  font-size: calc(1rem * var(--size, 0.8));
+  opacity: 0.95;
+  animation: fall-snow var(--duration, 8s) linear var(--delay, 0s) forwards infinite;
+  will-change: transform, opacity;
+  cursor: pointer;
+  user-select: none;
+  filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));
+}
+
+@keyframes fall-snow {
+  0% {
+    top: -20px;
+    opacity: 0.95;
+    transform: translateX(0) rotate(0deg);
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(60px) rotate(180deg);
+  }
+  100% {
+    top: 100vh;
+    opacity: 0;
+    transform: translateX(-30px) rotate(360deg);
+  }
+}
+
+/* ── INTERACTION EFFECT ── */
+.leaf:hover, .snowflake:hover {
+  filter: drop-shadow(0 0 8px rgba(255,200,0,0.6));
+  transform: scale(1.15);
+  cursor: grab;
+}
+
+.leaf:active, .snowflake:active {
+  cursor: grabbing;
+}

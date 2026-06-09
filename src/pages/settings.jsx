@@ -1,0 +1,152 @@
+import { useState, useEffect } from "react";
+import { SummerLeaves, SnowFlakes } from "../components/particleTheme";
+import "../style/settings.css";
+
+const THEMES = [
+  { id:"default", label:"Default",  bg:"linear-gradient(135deg,#3b82f6,#8b5cf6)", desc:"Biru & Ungu" },
+  { id:"dark",    label:"Dark",     bg:"linear-gradient(135deg,#1e293b,#6366f1)", desc:"Gelap Elegan" },
+  { id:"sunset",  label:"Sunset",   bg:"linear-gradient(135deg,#f97316,#ec4899)", desc:"Hangat & Cerah" },
+  { id:"ocean",   label:"Ocean",    bg:"linear-gradient(135deg,#0ea5e9,#6366f1)", desc:"Sejuk & Tenang" },
+  { id:"forest",  label:"Forest",   bg:"linear-gradient(135deg,#22c55e,#0ea5e9)", desc:"Segar & Alami" },
+  { id:"summer",  label:"🍂 Summer",  bg:"linear-gradient(135deg,#FFF5E6,#FFE8CC)", desc:"Daun Jatuh" },
+  { id:"snow",    label:"❄️ Snow",    bg:"linear-gradient(135deg,#E8F4F8,#D4EBF5)", desc:"Salju Dingin" },
+];
+
+const FONTS = [
+  { id:"inter",   label:"Inter",         sample:"AaBbCc" },
+  { id:"poppins", label:"Poppins",       sample:"AaBbCc" },
+  { id:"roboto",  label:"Roboto",        sample:"AaBbCc" },
+  { id:"mono",    label:"JetBrains Mono",sample:"AaBbCc" },
+];
+
+const SIZES = [
+  { id:"small",  label:"Kecil",  px:"13px" },
+  { id:"medium", label:"Sedang", px:"15px" },
+  { id:"large",  label:"Besar",  px:"17px" },
+];
+
+function Settings({ settings, setSettings }) {
+  const [saved, setSaved] = useState(false);
+  const [previewParticle, setPreviewParticle] = useState(null);
+
+  const update = (key, val) => {
+    const next = { ...settings, [key]: val };
+    setSettings(next);
+    localStorage.setItem("resonote-settings", JSON.stringify(next));
+    setSaved(true);
+    setTimeout(() => setSaved(false), 1800);
+  };
+
+  return (
+    <div className="settings-container">
+      {previewParticle && (
+        <div className="particle-preview-overlay" onClick={() => setPreviewParticle(null)}>
+          {previewParticle === "summer" && <SummerLeaves />}
+          {previewParticle === "snow" && <SnowFlakes />}
+          <div className="particle-preview-hint">Klik untuk menutup preview</div>
+        </div>
+      )}
+
+      <div className="settings-header">
+        <h1>⚙️ Pengaturan</h1>
+        {saved && <span className="saved-badge">✅ Tersimpan!</span>}
+      </div>
+
+      {/* ── THEMES ── */}
+      <section className="settings-section">
+        <h2>🎨 Tema Aplikasi</h2>
+        <p className="settings-desc">Pilih tampilan yang paling nyaman untukmu</p>
+        <div className="theme-grid">
+          {THEMES.map((t) => (
+            <button
+              key={t.id}
+              className={`theme-card ${settings.theme === t.id ? "active" : ""}`}
+              onClick={() => update("theme", t.id)}
+              onMouseEnter={() => (t.id === "summer" || t.id === "snow") && setPreviewParticle(t.id)}
+              onMouseLeave={() => setPreviewParticle(null)}
+            >
+              <div className="theme-preview" style={{ background: t.bg }}>
+                <div className="theme-preview-dots">
+                  <span /><span /><span />
+                </div>
+                <div className="theme-preview-lines">
+                  <span style={{ width:"70%" }}/><span style={{ width:"50%" }}/>
+                  <span style={{ width:"60%" }}/>
+                </div>
+              </div>
+              <div className="theme-info">
+                <span className="theme-name">{t.label}</span>
+                <span className="theme-desc">{t.desc}</span>
+              </div>
+              {settings.theme === t.id && (
+                <span className="theme-check">✓</span>
+              )}
+              {(t.id === "summer" || t.id === "snow") && (
+                <span className="theme-badge-particle">✨ Animasi</span>
+              )}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ── FONTS ── */}
+      <section className="settings-section">
+        <h2>🔤 Font</h2>
+        <p className="settings-desc">Pilih gaya teks yang kamu suka</p>
+        <div className="font-grid">
+          {FONTS.map((f) => (
+            <button
+              key={f.id}
+              className={`font-card ${settings.font === f.id ? "active" : ""}`}
+              style={{ fontFamily: f.id === "mono" ? "'JetBrains Mono', monospace" : `'${f.label}', sans-serif` }}
+              onClick={() => update("font", f.id)}
+            >
+              <span className="font-sample">{f.sample}</span>
+              <span className="font-name">{f.label}</span>
+              {settings.font === f.id && <span className="font-check">✓</span>}
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ── FONT SIZE ── */}
+      <section className="settings-section">
+        <h2>📐 Ukuran Teks</h2>
+        <p className="settings-desc">Sesuaikan ukuran teks sesuai kenyamanan</p>
+        <div className="size-grid">
+          {SIZES.map((s) => (
+            <button
+              key={s.id}
+              className={`size-card ${settings.fontSize === s.id ? "active" : ""}`}
+              onClick={() => update("fontSize", s.id)}
+            >
+              <span className="size-preview" style={{ fontSize: s.px }}>Aa</span>
+              <span className="size-label">{s.label}</span>
+              <span className="size-px">{s.px}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ── RESET ── */}
+      <section className="settings-section">
+        <h2>🔄 Reset</h2>
+        <p className="settings-desc">Kembalikan ke pengaturan awal</p>
+        <button
+          className="btn-reset"
+          onClick={() => {
+            const def = { theme:"default", font:"inter", fontSize:"medium" };
+            setSettings(def);
+            localStorage.setItem("resonote-settings", JSON.stringify(def));
+            setSaved(true);
+            setTimeout(() => setSaved(false), 1800);
+          }}
+        >
+          Reset ke Default
+        </button>
+      </section>
+    </div>
+  );
+}
+
+export default Settings;

@@ -1,0 +1,108 @@
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 240px;
+  height: 100vh;
+  background: var(--bg-sidebar);
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 16px;
+  z-index: 100;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1), background 0.25s;
+  box-shadow: 4px 0 24px rgba(0,0,0,0.18);
+}
+
+/* ── HEADER ── */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 20px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  margin-bottom: 8px;
+}
+.sidebar-header h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.3px;
+}
+.close-btn {
+  display: none;
+  background: rgba(255,255,255,0.08);
+  border: none;
+  color: var(--sb-text);
+  width: 30px; height: 30px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.close-btn:hover { background: rgba(255,255,255,0.14); }
+
+/* ── NAV ITEMS ── */
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: calc(100% - 24px);
+  margin: 2px 12px;
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: var(--sb-text);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.18s, color 0.18s, transform 0.15s;
+  font-family: var(--font, 'Inter', sans-serif);
+  position: relative;
+}
+.menu:hover {
+  background: var(--sb-hover);
+  color: rgba(255,255,255,0.85);
+  transform: translateX(2px);
+}
+.menu.active {
+  background: var(--sb-active);
+  color: var(--sb-text-active);
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+}
+.menu.active::before {
+  content: '';
+  position: absolute;
+  left: -12px; top: 50%;
+  transform: translateY(-50%);
+  width: 3px; height: 60%;
+  background: var(--sb-active);
+  border-radius: 0 2px 2px 0;
+  filter: brightness(1.4);
+}
+
+/* ── DIVIDER ── */
+.sidebar-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 8px 16px;
+}
+
+/* ── SETTINGS (bottom) ── */
+.menu-settings {
+  margin-top: auto;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 8px;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .close-btn { display: flex; }
+}

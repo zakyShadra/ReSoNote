@@ -1,0 +1,410 @@
+/* ═══════════════════════════════════════════
+   ANIMATED THEMES — ReSoNote
+═══════════════════════════════════════════ */
+
+/* ── SUMMER THEME (Falling Leaves) ── */
+[data-theme="summer"] {
+  --orb1: #fbbf24;
+  --orb2: #f97316;
+  --orb3: #fdba74;
+}
+
+.leaves-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.leaf {
+  position: absolute;
+  bottom: -50px;
+  font-size: 2rem;
+  opacity: 0.8;
+  animation: leaf-fall linear infinite;
+  user-select: none;
+}
+
+@keyframes leaf-fall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Different leaf speeds */
+.leaf:nth-child(1) {
+  left: 10%;
+  animation-duration: 8s;
+  animation-delay: 0s;
+  font-size: 1.8rem;
+}
+
+.leaf:nth-child(2) {
+  left: 20%;
+  animation-duration: 10s;
+  animation-delay: 2s;
+  font-size: 2.2rem;
+}
+
+.leaf:nth-child(3) {
+  left: 30%;
+  animation-duration: 9s;
+  animation-delay: 4s;
+  font-size: 2rem;
+}
+
+.leaf:nth-child(4) {
+  left: 40%;
+  animation-duration: 11s;
+  animation-delay: 1s;
+  font-size: 1.9rem;
+}
+
+.leaf:nth-child(5) {
+  left: 50%;
+  animation-duration: 8.5s;
+  animation-delay: 3s;
+  font-size: 2.1rem;
+}
+
+.leaf:nth-child(6) {
+  left: 60%;
+  animation-duration: 10.5s;
+  animation-delay: 0.5s;
+  font-size: 1.95rem;
+}
+
+.leaf:nth-child(7) {
+  left: 70%;
+  animation-duration: 9.5s;
+  animation-delay: 2.5s;
+  font-size: 2.05rem;
+}
+
+.leaf:nth-child(8) {
+  left: 80%;
+  animation-duration: 10s;
+  animation-delay: 1.5s;
+  font-size: 2rem;
+}
+
+.leaf:nth-child(9) {
+  left: 90%;
+  animation-duration: 8s;
+  animation-delay: 3.5s;
+  font-size: 2.15rem;
+}
+
+/* Leaf pile at bottom */
+.leaf-pile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: linear-gradient(to top, rgba(251, 146, 60, 0.3), transparent);
+  transition: height 0.3s ease;
+  pointer-events: all;
+}
+
+.leaf-pile.filled {
+  height: 120px;
+}
+
+.pile-leaf {
+  position: absolute;
+  font-size: 1.5rem;
+  opacity: 0.6;
+  user-select: none;
+}
+
+/* ── SNOW THEME (Falling Snow) ── */
+[data-theme="snow"] {
+  --orb1: #e0f2fe;
+  --orb2: #bae6fd;
+  --orb3: #7dd3fc;
+}
+
+.snowflakes-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.snowflake {
+  position: absolute;
+  top: -50px;
+  font-size: 2rem;
+  opacity: 0.9;
+  animation: snowfall linear infinite;
+  user-select: none;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translateY(-100px) translateX(0);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(100vh) translateX(100px);
+    opacity: 0;
+  }
+}
+
+.snowflake:nth-child(1) {
+  left: 5%;
+  animation-duration: 10s;
+  animation-delay: 0s;
+  animation-timing-function: ease-in;
+}
+
+.snowflake:nth-child(2) {
+  left: 15%;
+  animation-duration: 12s;
+  animation-delay: 1s;
+}
+
+.snowflake:nth-child(3) {
+  left: 25%;
+  animation-duration: 11s;
+  animation-delay: 2s;
+}
+
+.snowflake:nth-child(4) {
+  left: 35%;
+  animation-duration: 10.5s;
+  animation-delay: 0.5s;
+}
+
+.snowflake:nth-child(5) {
+  left: 45%;
+  animation-duration: 11.5s;
+  animation-delay: 1.5s;
+}
+
+.snowflake:nth-child(6) {
+  left: 55%;
+  animation-duration: 10s;
+  animation-delay: 2.5s;
+}
+
+.snowflake:nth-child(7) {
+  left: 65%;
+  animation-duration: 12.5s;
+  animation-delay: 0.2s;
+}
+
+.snowflake:nth-child(8) {
+  left: 75%;
+  animation-duration: 11s;
+  animation-delay: 1.8s;
+}
+
+.snowflake:nth-child(9) {
+  left: 85%;
+  animation-duration: 10.5s;
+  animation-delay: 2.2s;
+}
+
+.snowflake:nth-child(10) {
+  left: 95%;
+  animation-duration: 12s;
+  animation-delay: 0.8s;
+}
+
+/* Snow pile */
+.snow-pile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: linear-gradient(to top, rgba(191, 219, 254, 0.4), transparent);
+  transition: height 0.3s ease;
+  pointer-events: all;
+  z-index: 2;
+}
+
+.snow-pile.filled {
+  height: 150px;
+}
+
+.snowman {
+  position: absolute;
+  left: 50%;
+  bottom: 150px;
+  transform: translateX(-50%);
+  font-size: 4rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  user-select: none;
+}
+
+.snowman.visible {
+  opacity: 1;
+}
+
+/* ── SPRING THEME ── */
+[data-theme="spring"] {
+  --orb1: #86efac;
+  --orb2: #fca5a5;
+  --orb3: #fbbf24;
+}
+
+.flowers-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.flower {
+  position: absolute;
+  font-size: 1.8rem;
+  animation: flower-bloom 3s ease-in-out infinite;
+  user-select: none;
+}
+
+@keyframes flower-bloom {
+  0%, 100% {
+    transform: scale(0.8) rotateZ(0deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2) rotateZ(180deg);
+    opacity: 1;
+  }
+}
+
+.flower:nth-child(odd) {
+  animation: flower-bloom2 3.5s ease-in-out infinite;
+}
+
+@keyframes flower-bloom2 {
+  0%, 100% {
+    transform: scale(0.9) rotateZ(-180deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.1) rotateZ(0deg);
+    opacity: 1;
+  }
+}
+
+/* ── AUTUMN THEME ── */
+[data-theme="autumn"] {
+  --orb1: #fb923c;
+  --orb2: #f59e0b;
+  --orb3: #fbbf24;
+}
+
+/* ── NEON THEME ── */
+[data-theme="neon"] {
+  --orb1: #ec4899;
+  --orb2: #06b6d4;
+  --orb3: #8b5cf6;
+}
+
+/* Neon glow effect */
+[data-theme="neon"] * {
+  text-shadow: 0 0 10px currentColor;
+}
+
+/* ── MIDNIGHT THEME ── */
+[data-theme="midnight"] {
+  --orb1: #4c1d95;
+  --orb2: #0f172a;
+  --orb3: #312e81;
+}
+
+/* Star animation for midnight theme */
+.stars-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ── INTERACTION EFFECTS ── */
+.interactive-particle-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.interactive-particle {
+  position: fixed;
+  pointer-events: none;
+  user-select: none;
+}
+
+.particle-move {
+  animation: particle-disperse 0.6s ease-out forwards;
+}
+
+@keyframes particle-disperse {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(0);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .leaf {
+    font-size: 1.5rem;
+  }
+
+  .snowflake {
+    font-size: 1.6rem;
+  }
+
+  .flower {
+    font-size: 1.4rem;
+  }
+
+  .leaf-pile.filled {
+    height: 80px;
+  }
+
+  .snow-pile.filled {
+    height: 100px;
+  }
+
+  .snowman {
+    font-size: 3rem;
+    bottom: 100px;
+  }
+}
