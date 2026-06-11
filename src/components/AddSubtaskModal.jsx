@@ -20,7 +20,7 @@ function AddSubtaskModal({ isOpen, onClose, onAdd }) {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="add-subtask-overlay" onClick={onClose}>
       <div 
         className="add-subtask-modal" 
         onClick={(e) => e.stopPropagation()}
@@ -46,15 +46,15 @@ function AddSubtaskModal({ isOpen, onClose, onAdd }) {
           />
         </div>
 
-        <div className="modal-actions">
+        <div className="add-subtask-actions">
           <button 
-            className="btn-cancel" 
+            className="add-subtask-cancel" 
             onClick={onClose}
           >
             Batal
           </button>
           <button 
-            className="btn-add" 
+            className="add-subtask-confirm" 
             onClick={handleAdd}
             disabled={!text.trim()}
           >

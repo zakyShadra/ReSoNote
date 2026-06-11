@@ -168,6 +168,30 @@
   --shadow: 0 4px 16px rgba(14,165,233,0.08);
   --shadow-lg: 0 20px 40px rgba(14,165,233,0.12);
 }
+[data-theme="love"] {
+  --bg: #fff1f7;
+  --bg-card: rgba(255,255,255,0.9);
+  --bg-solid: #ffffff;
+  --bg-sidebar: #5f0f2f;
+  --sb-text: #f9a8d4;
+  --sb-text-active: #fff;
+  --sb-hover: rgba(255,255,255,0.08);
+  --sb-active: #e11d48;
+  --topbar-bg: rgba(255,241,247,0.82);
+  --accent: #e11d48;
+  --accent2: #fb7185;
+  --accent-h: #be123c;
+  --accent-soft: rgba(225,29,72,0.11);
+  --text1: #4a1024;
+  --text2: #8a2944;
+  --text3: #bd6a83;
+  --border: rgba(251,113,133,0.34);
+  --shadow: 0 4px 16px rgba(225,29,72,0.1);
+  --shadow-lg: 0 20px 40px rgba(225,29,72,0.15);
+  --orb1: #fb7185;
+  --orb2: #f472b6;
+  --orb3: #fda4af;
+}
 [data-theme="spring"] {
   --bg: #faf5ff;
   --bg-card: rgba(255,255,255,0.92);

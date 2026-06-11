@@ -144,8 +144,42 @@ export function SnowFlakes() {
   );
 }
 
+export function LoveHearts() {
+  const [hearts] = useState(() =>
+    Array.from({ length: 34 }, (_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      delay: Math.random() * 4,
+      duration: 7 + Math.random() * 5,
+      size: 0.75 + Math.random() * 0.9,
+      drift: -40 + Math.random() * 80,
+    }))
+  );
+
+  return (
+    <div className="particles-container love">
+      {hearts.map((heart) => (
+        <div
+          key={heart.id}
+          className="love-heart"
+          style={{
+            left: `${heart.left}%`,
+            "--delay": `${heart.delay}s`,
+            "--duration": `${heart.duration}s`,
+            "--size": heart.size,
+            "--drift": `${heart.drift}px`,
+          }}
+        >
+          ♥
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function ThemeParticles({ theme }) {
   if (theme === "summer") return <SummerLeaves />;
   if (theme === "snow") return <SnowFlakes />;
+  if (theme === "love") return <LoveHearts />;
   return null;
 }

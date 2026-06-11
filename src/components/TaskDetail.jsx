@@ -114,24 +114,27 @@ function TaskDetail({
 
     return (
         <div className="task-detail">
+        <div className="task-detail-header">
+            <div>
+            <span className="task-detail-eyebrow">Task aktif</span>
+            <h2>
+                {selectedTask.icon}{" "}
+                {selectedTask.title}
+            </h2>
+            </div>
 
-        <h2>
-            {selectedTask.icon}{" "}
-            {selectedTask.title}
-        </h2>
-
-        <button
+            <button
             className="add-subtask-btn"
             onClick={() => setSubtaskModalOpen(true)}
-        >
-            + Tambah Subtask
-        </button>
-
-        <hr />
+            >
+            <span className="add-subtask-icon">+</span>
+            <span>Subtask</span>
+            </button>
+        </div>
 
         {selectedTask.subtasks
             .length === 0 && (
-            <p>
+            <p className="subtask-empty">
             Belum ada subtask.
             </p>
         )}
@@ -170,6 +173,7 @@ function TaskDetail({
                 </div>
 
                 <button
+                className="subtask-delete"
                 onClick={() =>
                     deleteSubtask(
                     subtask.id

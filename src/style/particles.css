@@ -2,13 +2,13 @@
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
   overflow: hidden;
 }
 
 /* ── SUMMER LEAVES ── */
 .particles-container.summer {
-  background: linear-gradient(135deg, #FFF5E6 0%, #FFE8CC 100%);
+  background: transparent;
 }
 
 .leaf {
@@ -20,7 +20,7 @@
   will-change: transform, opacity;
   cursor: pointer;
   user-select: none;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 @keyframes fall-leaf {
@@ -47,7 +47,7 @@
 
 /* ── SNOW ── */
 .particles-container.snow {
-  background: linear-gradient(135deg, #E8F4F8 0%, #D4EBF5 100%);
+  background: transparent;
 }
 
 .snowflake {
@@ -59,7 +59,7 @@
   will-change: transform, opacity;
   cursor: pointer;
   user-select: none;
-  pointer-events: auto;
+  pointer-events: none;
   filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));
 }
 
@@ -91,4 +91,35 @@
 
 .leaf:active, .snowflake:active {
   cursor: grabbing;
+}
+
+/* LOVE HEARTS */
+.love-heart {
+  position: absolute;
+  top: -40px;
+  color: rgba(225, 29, 72, 0.78);
+  font-size: calc(1.35rem * var(--size, 1));
+  line-height: 1;
+  animation: love-float var(--duration, 9s) ease-in var(--delay, 0s) infinite;
+  filter: drop-shadow(0 8px 12px rgba(225, 29, 72, 0.18));
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes love-float {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 105vh, 0) rotate(-12deg) scale(0.8);
+  }
+  12% {
+    opacity: 0.82;
+  }
+  50% {
+    transform: translate3d(var(--drift), 46vh, 0) rotate(12deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(var(--drift) * -0.6), -12vh, 0) rotate(32deg) scale(1.12);
+  }
 }

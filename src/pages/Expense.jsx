@@ -6,6 +6,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import * as XLSX from "xlsx";
+import CurrencyInput from "../components/currentInput";
 import "../style/Expense.css";
 
 const CATEGORIES = {
@@ -25,15 +26,8 @@ const formatRupiah = (amount) =>
     minimumFractionDigits: 0,
   }).format(amount);
 
-const formatRupiahInput = (value) => {
-  if (!value && value !== 0) return "";
-  const stringValue = String(value);
-  const numbers = stringValue.replace(/\D/g, "");
-  return numbers.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-};
-
 const parseRupiahInput = (value) => {
-  const numbers = value.replace(/\D/g, "");
+  const numbers = String(value ?? "").replace(/\D/g, "");
   return parseInt(numbers) || 0;
 };
 
@@ -168,7 +162,7 @@ function Expense() {
   };
 
   const handleSaveBalance = () => {
-    const val = parseInt(balInput);
+    const val = parseRupiahInput(String(balInput));
     if (isNaN(val) || val < 0) return;
     setInitialBalance(val);
     setBalInput("");
@@ -242,11 +236,10 @@ function Expense() {
       {/* Edit saldo */}
       {showBalEdit && (
         <div className="bal-edit-row">
-          <input
-            type="number"
-            placeholder="Masukkan saldo awal..."
+          <CurrencyInput
+            placeholder="Contoh: 1000000"
             value={balInput}
-            onChange={(e) => setBalInput(e.target.value)}
+            onChange={setBalInput}
             onKeyDown={(e) => e.key === "Enter" && handleSaveBalance()}
           />
           <button className="btn-save" onClick={handleSaveBalance}>Simpan</button>
@@ -267,11 +260,10 @@ function Expense() {
           <div className="form-row">
             <div className="form-group">
               <label>Jumlah (Rp)</label>
-              <input
-                type="text"
+              <CurrencyInput
                 placeholder="Contoh: 15000"
-                value={formatRupiahInput(form.amount)}
-                onChange={(e) => setForm({ ...form, amount: parseRupiahInput(e.target.value) })}
+                value={form.amount}
+                onChange={(amount) => setForm({ ...form, amount })}
                 onKeyDown={(e) => e.key === "Enter" && handleAdd()}
               />
             </div>

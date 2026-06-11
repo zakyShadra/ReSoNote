@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import CurrencyInput from "../components/currentInput";
 
 const CATEGORIES = {
   Makanan:   { color:"#FF6B6B", icon:"🍜" },
@@ -12,21 +13,21 @@ const CATEGORIES = {
 
 const fmt = (n) => new Intl.NumberFormat("id-ID", { style:"currency", currency:"IDR", minimumFractionDigits:0 }).format(n);
 
-const formatRupiahInput = (value) => {
-  if (!value) return "";
-  const numbers = value.replace(/\D/g, "");
-  return numbers.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-};
-
 const parseRupiahInput = (value) => {
-  const numbers = value.replace(/\D/g, "");
+  const numbers = String(value ?? "").replace(/\D/g, "");
   return parseInt(numbers) || 0;
 };
 
 function BudgetBar({ label, icon, color, used, limit, onSetLimit }) {
+  const [editing, setEditing] = useState(false);
+  const [draftLimit, setDraftLimit] = useState(limit || 0);
   const pct = limit > 0 ? Math.min((used / limit) * 100, 100) : 0;
   const over = limit > 0 && used > limit;
   const warn = limit > 0 && pct >= 80 && !over;
+  const saveLimit = () => {
+    onSetLimit(parseRupiahInput(draftLimit));
+    setEditing(false);
+  };
 
   return (
     <div style={{ background:"var(--bg-card)", border:"1.5px solid var(--border)", borderRadius:14, padding:"16px 18px", boxShadow:"var(--shadow)" }}>
@@ -43,8 +44,8 @@ function BudgetBar({ label, icon, color, used, limit, onSetLimit }) {
           )}
           <button
             onClick={() => {
-              const val = prompt(`Budget ${label} (Rp):`, formatRupiahInput(String(limit)));
-              if (val !== null) onSetLimit(parseRupiahInput(val));
+              setDraftLimit(limit || 0);
+              setEditing(true);
             }}
             style={{ background:"var(--accent-soft)", border:"none", borderRadius:6, padding:"3px 8px", fontSize:"0.72rem", color:"var(--accent)", cursor:"pointer", fontWeight:600 }}
           >
@@ -52,6 +53,20 @@ function BudgetBar({ label, icon, color, used, limit, onSetLimit }) {
           </button>
         </div>
       </div>
+
+      {editing && (
+        <div style={{ display:"flex", gap:8, marginBottom:12 }}>
+          <CurrencyInput
+            value={draftLimit}
+            onChange={setDraftLimit}
+            placeholder={`Budget ${label}`}
+            onKeyDown={(e) => e.key === "Enter" && saveLimit()}
+            style={{ flex:1, minWidth:0, padding:"8px 10px", border:"1.5px solid var(--border)", borderRadius:8, background:"var(--bg)", color:"var(--text1)", outline:"none" }}
+          />
+          <button onClick={saveLimit} style={{ padding:"8px 12px", border:"none", borderRadius:8, background:"var(--accent)", color:"#fff", fontWeight:600, cursor:"pointer" }}>Simpan</button>
+          <button onClick={() => setEditing(false)} style={{ padding:"8px 12px", border:"1.5px solid var(--border)", borderRadius:8, background:"var(--bg-card)", color:"var(--text2)", fontWeight:600, cursor:"pointer" }}>Batal</button>
+        </div>
+      )}
 
       {limit > 0 && (
         <>
@@ -96,6 +111,8 @@ function Budget() {
     const s = localStorage.getItem("resonote-monthly-budget");
     return s ? parseInt(s) : 0;
   });
+  const [editingMonthly, setEditingMonthly] = useState(false);
+  const [monthlyDraft, setMonthlyDraft] = useState(monthlyTotal);
 
 
   useEffect(() => {
@@ -162,14 +179,33 @@ function Budget() {
           </div>
           <button
             onClick={() => {
-              const v = prompt("Total budget bulan ini (Rp):", formatRupiahInput(String(monthlyTotal)));
-              if (v !== null) setMonthlyTotal(parseRupiahInput(v));
+              setMonthlyDraft(monthlyTotal);
+              setEditingMonthly(true);
             }}
             style={{ padding:"7px 16px", background:"var(--accent)", color:"#fff", border:"none", borderRadius:8, fontSize:"0.82rem", fontWeight:600, cursor:"pointer" }}
           >
             {monthlyTotal > 0 ? "Ubah" : "+ Set Budget"}
           </button>
         </div>
+
+        {editingMonthly && (
+          <div style={{ display:"flex", gap:8, marginBottom:14, flexWrap:"wrap" }}>
+            <CurrencyInput
+              value={monthlyDraft}
+              onChange={setMonthlyDraft}
+              placeholder="Contoh: 1000000"
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  setMonthlyTotal(parseRupiahInput(monthlyDraft));
+                  setEditingMonthly(false);
+                }
+              }}
+              style={{ flex:"1 1 220px", padding:"9px 12px", border:"1.5px solid var(--border)", borderRadius:8, background:"var(--bg)", color:"var(--text1)", outline:"none" }}
+            />
+            <button onClick={() => { setMonthlyTotal(parseRupiahInput(monthlyDraft)); setEditingMonthly(false); }} style={{ padding:"9px 14px", border:"none", borderRadius:8, background:"var(--accent)", color:"#fff", fontWeight:600, cursor:"pointer" }}>Simpan</button>
+            <button onClick={() => setEditingMonthly(false)} style={{ padding:"9px 14px", border:"1.5px solid var(--border)", borderRadius:8, background:"var(--bg-card)", color:"var(--text2)", fontWeight:600, cursor:"pointer" }}>Batal</button>
+          </div>
+        )}
 
         <div style={{ display:"flex", gap:16, marginBottom:14, flexWrap:"wrap" }}>
           {[

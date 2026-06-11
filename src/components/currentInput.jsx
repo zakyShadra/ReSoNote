@@ -11,12 +11,14 @@ function CurrencyInput({
   ...props
 }) {
   const handleChange = (e) => {
-    const raw = e.target.value;
+    const raw = e?.target?.value ?? "";
     const formatted = formatNumberInput(raw);
-    onChange?.(parseFormattedNumber(formatted));
+    onChange?.(formatted === "" ? "" : parseFormattedNumber(formatted));
   };
 
-  const displayValue = value ? formatNumberInput(String(value)) : "";
+  const displayValue = value === "" || value === null || value === undefined
+    ? ""
+    : formatNumberInput(value);
 
   return (
     <input

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { SummerLeaves, SnowFlakes } from "../components/particleTheme";
 import "../style/settings.css";
 
 const THEMES = [
@@ -10,6 +9,7 @@ const THEMES = [
   { id:"forest",  label:"Forest",   bg:"linear-gradient(135deg,#22c55e,#0ea5e9)", desc:"Segar & Alami" },
   { id:"summer",  label:"🍂 Summer",  bg:"linear-gradient(135deg,#FFF5E6,#FFE8CC)", desc:"Daun Jatuh" },
   { id:"snow",    label:"❄️ Snow",    bg:"linear-gradient(135deg,#E8F4F8,#D4EBF5)", desc:"Salju Dingin" },
+  { id:"love",    label:"Love",     bg:"linear-gradient(135deg,#fce7f3,#fb7185)", desc:"Pink & Hati" },
 ];
 
 const FONTS = [
@@ -27,7 +27,6 @@ const SIZES = [
 
 function Settings({ settings, setSettings }) {
   const [saved, setSaved] = useState(false);
-  const [previewParticle, setPreviewParticle] = useState(null);
 
   const update = (key, val) => {
     const next = { ...settings, [key]: val };
@@ -39,14 +38,6 @@ function Settings({ settings, setSettings }) {
 
   return (
     <div className="settings-container">
-      {previewParticle && (
-        <div className="particle-preview-overlay" onClick={() => setPreviewParticle(null)}>
-          {previewParticle === "summer" && <SummerLeaves />}
-          {previewParticle === "snow" && <SnowFlakes />}
-          <div className="particle-preview-hint">Klik untuk menutup preview</div>
-        </div>
-      )}
-
       <div className="settings-header">
         <h1>⚙️ Pengaturan</h1>
         {saved && <span className="saved-badge">✅ Tersimpan!</span>}
@@ -62,8 +53,6 @@ function Settings({ settings, setSettings }) {
               key={t.id}
               className={`theme-card ${settings.theme === t.id ? "active" : ""}`}
               onClick={() => update("theme", t.id)}
-              onMouseEnter={() => (t.id === "summer" || t.id === "snow") && setPreviewParticle(t.id)}
-              onMouseLeave={() => setPreviewParticle(null)}
             >
               <div className="theme-preview" style={{ background: t.bg }}>
                 <div className="theme-preview-dots">
@@ -81,7 +70,7 @@ function Settings({ settings, setSettings }) {
               {settings.theme === t.id && (
                 <span className="theme-check">✓</span>
               )}
-              {(t.id === "summer" || t.id === "snow") && (
+              {["summer", "snow", "love"].includes(t.id) && (
                 <span className="theme-badge-particle">✨ Animasi</span>
               )}
             </button>

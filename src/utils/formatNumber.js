@@ -4,8 +4,8 @@
  * 1500000 → 1.500.000
  */
 export const formatNumberInput = (value) => {
-  if (!value) return '';
-  const num = value.replace(/\D/g, '');
+  if (value === null || value === undefined || value === "") return "";
+  const num = String(value).replace(/\D/g, "");
   return num.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 };
 
@@ -14,5 +14,6 @@ export const formatNumberInput = (value) => {
  * 100.000 → 100000
  */
 export const parseFormattedNumber = (formatted) => {
-  return parseInt(formatted.replace(/\./g, ''), 10) || 0;
+  if (formatted === null || formatted === undefined || formatted === "") return 0;
+  return parseInt(String(formatted).replace(/\D/g, ""), 10) || 0;
 };
