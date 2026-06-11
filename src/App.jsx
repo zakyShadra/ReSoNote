@@ -10,8 +10,8 @@ import Calendar  from "./pages/Calendar";
 import Reminder  from "./pages/Reminder";
 import Notes     from "./pages/Notes";
 import Expense   from "./pages/Expense";
-import Budget    from "./pages/Budget";
-import Settings  from "./pages/Settings";
+import Budget    from "./pages/budget";
+import Settings  from "./pages/settings";
 
 import "./style/App.css";
 
@@ -60,6 +60,11 @@ function App() {
 
       {/* Theme-specific particles */}
       <ThemeParticles theme={settings.theme} />
+
+      {/* Sidebar Overlay - close sidebar when clicked */}
+      {menuOpen && (
+        <div className="sidebar-overlay" onClick={() => setMenuOpen(false)} />
+      )}
 
       <Sidebar
         isOpen={menuOpen}

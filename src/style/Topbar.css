@@ -15,7 +15,7 @@
 }
 
 .hamburger {
-  display: none;
+  display: flex;
   background: var(--accent-soft);
   border: 1px solid var(--border);
   color: var(--text2);
@@ -43,6 +43,5 @@
 }
 
 @media (max-width: 768px) {
-  .hamburger { display: flex; }
   .topbar { padding: 0 14px; }
 }

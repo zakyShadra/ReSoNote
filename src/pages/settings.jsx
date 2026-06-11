@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { SummerLeaves, SnowFlakes } from "../components/particleTheme";
 import "../style/settings.css";
 

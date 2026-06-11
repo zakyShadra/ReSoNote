@@ -9,15 +9,22 @@ function DeadlineModal({
   const [deadlineDate, setDeadlineDate] = useState("");
   const [deadlineTime, setDeadlineTime] = useState("");
 
+  // Initialize form fields when deadline or modal state changes
   useEffect(() => {
-    if (deadline) {
-      const [date, time] = deadline.split("T");
-      setDeadlineDate(date || "");
-      setDeadlineTime(time ? time.slice(0, 5) : "");
-    } else {
-      setDeadlineDate("");
-      setDeadlineTime("");
-    }
+    if (!isOpen) return;
+    
+    const timer = setTimeout(() => {
+      if (deadline) {
+        const [date, time] = deadline.split("T");
+        setDeadlineDate(date || "");
+        setDeadlineTime(time ? time.slice(0, 5) : "");
+      } else {
+        setDeadlineDate("");
+        setDeadlineTime("");
+      }
+    }, 0);
+    
+    return () => clearTimeout(timer);
   }, [deadline, isOpen]);
 
   if (!isOpen) return null;

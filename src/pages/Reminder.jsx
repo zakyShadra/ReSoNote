@@ -2,14 +2,6 @@ import { useEffect, useState } from "react";
 import { getReminders } from "../utils/reminderEngine";
 import { getDeadlineStatus } from "../utils/deadlineUtils";
 
-const formatDeadline = (iso) => {
-  if (!iso) return "-";
-  return new Date(iso).toLocaleString("id-ID", {
-    day: "numeric", month: "short", year: "numeric",
-    hour: "2-digit", minute: "2-digit",
-  });
-};
-
 const timeAgo = (iso) => {
   const diff = Date.now() - new Date(iso).getTime();
   const mins = Math.floor(diff / 60000);
@@ -127,7 +119,7 @@ function Reminder() {
   );
 }
 
-function Section({ title, children, empty, color }) {
+function Section({ title, children, empty }) {
   const items = Array.isArray(children) ? children.filter(Boolean) : children ? [children] : [];
   return (
     <div style={{ marginBottom: "28px" }}>

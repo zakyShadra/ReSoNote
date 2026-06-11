@@ -1,8 +1,8 @@
 .particles-container {
   position: fixed;
   inset: 0;
-  pointer-events: auto;
-  z-index: 10;
+  pointer-events: none;
+  z-index: 1;
   overflow: hidden;
 }
 
@@ -20,6 +20,7 @@
   will-change: transform, opacity;
   cursor: pointer;
   user-select: none;
+  pointer-events: auto;
 }
 
 @keyframes fall-leaf {
@@ -58,6 +59,7 @@
   will-change: transform, opacity;
   cursor: pointer;
   user-select: none;
+  pointer-events: auto;
   filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));
 }
 

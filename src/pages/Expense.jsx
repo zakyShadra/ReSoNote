@@ -26,8 +26,9 @@ const formatRupiah = (amount) =>
   }).format(amount);
 
 const formatRupiahInput = (value) => {
-  if (!value) return "";
-  const numbers = value.replace(/\D/g, "");
+  if (!value && value !== 0) return "";
+  const stringValue = String(value);
+  const numbers = stringValue.replace(/\D/g, "");
   return numbers.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 

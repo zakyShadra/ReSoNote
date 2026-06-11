@@ -1,5 +1,3 @@
-import { getReminders } from "./reminderEngine";
-
 export function startReminderRunner(getTasks, notify, setTasks) {
   const interval = setInterval(() => {
     const tasks = getTasks();

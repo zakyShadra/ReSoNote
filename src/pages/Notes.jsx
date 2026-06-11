@@ -29,7 +29,7 @@ const formatDate = (iso) =>
     day: "numeric", month: "short", year: "numeric",
   });
 
-const stripHtml = (str) => str.replace(/<[^>]*>/g, "");
+
 
 /* ──────────────────────────────────────────
    NOTES PAGE
@@ -47,7 +47,7 @@ function Notes() {
   const [editingNote, setEditingNote] = useState(null); // null = new, else note obj
   const [form, setForm]             = useState(EMPTY_FORM);
   const [tagInput, setTagInput]     = useState("");
-  const [showColorPicker, setShowColorPicker] = useState(false);
+
   const [convertMsg, setConvertMsg] = useState(""); // flash message
   const colorRef = useRef(null);
 
@@ -56,16 +56,7 @@ function Notes() {
     localStorage.setItem("resonote-notes", JSON.stringify(notes));
   }, [notes]);
 
-  /* close color picker on outside click */
-  useEffect(() => {
-    const handler = (e) => {
-      if (colorRef.current && !colorRef.current.contains(e.target)) {
-        setShowColorPicker(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+
 
   /* ── computed ── */
   const filtered = useMemo(() => {
@@ -114,7 +105,6 @@ function Notes() {
   const closeModal = () => {
     setShowModal(false);
     setEditingNote(null);
-    setShowColorPicker(false);
   };
 
   const parseTags = (str) =>

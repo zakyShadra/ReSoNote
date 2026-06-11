@@ -356,6 +356,29 @@
   animation: page-in 0.2s ease;
 }
 
+/* Add subtask button on card */
+.add-subtask-card-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 7px 14px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1.5px solid var(--accent);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-family: var(--font, inherit);
+}
+.add-subtask-card-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 12px var(--accent-soft);
+  transform: translateY(-1px);
+}
+.add-subtask-card-btn:active { transform: translateY(0); }
+
 @media (max-width: 600px) {
   .add-task-row { flex-wrap: wrap; }
   .add-task-row select { width: 100%; }

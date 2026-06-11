@@ -4,6 +4,7 @@ import { notify } from "../adapters/webNotifier";
 import TaskCard from "../components/TaskCard";
 import TaskDetail from "../components/TaskDetail";
 import DeadlineModal from "../components/DeadlineModal";
+import AddSubtaskModal from "../components/AddSubtaskModal";
 import "../style/todo.css";
 
 function Todo() {
@@ -20,6 +21,8 @@ function Todo() {
   const [deadlineModalOpen, setDeadlineModalOpen] = useState(false);
   const [deadlineValue, setDeadlineValue] = useState("");
   const [taskForDeadline, setTaskForDeadline] = useState(null);
+  const [subtaskModalOpen, setSubtaskModalOpen] = useState(false);
+  const [taskForSubtask, setTaskForSubtask] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("resonote-tasks", JSON.stringify(tasks));
@@ -33,12 +36,6 @@ function Todo() {
     );
     return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    if (!selectedTask) return;
-    const stillExist = tasks.find((t) => t.id === selectedTask.id);
-    if (!stillExist) setSelectedTask(null);
-  }, [tasks, selectedTask]);
 
   const addTask = () => {
     if (!taskTitle.trim()) return;
@@ -86,6 +83,36 @@ function Todo() {
     setTaskForDeadline(task);
     setDeadlineValue(task.deadline || "");
     setDeadlineModalOpen(true);
+  };
+
+  const handleAddSubtask = (task) => {
+    setTaskForSubtask(task);
+    setSubtaskModalOpen(true);
+  };
+
+  const addSubtaskDirect = (subtaskText) => {
+    if (!taskForSubtask) return;
+    const updatedTasks = tasks.map((t) =>
+      t.id === taskForSubtask.id
+        ? {
+            ...t,
+            subtasks: [
+              ...t.subtasks,
+              {
+                id: Date.now(),
+                text: subtaskText,
+                done: false,
+              },
+            ],
+          }
+        : t
+    );
+    setTasks(updatedTasks);
+    if (selectedTask?.id === taskForSubtask.id) {
+      setSelectedTask(updatedTasks.find((t) => t.id === taskForSubtask.id));
+    }
+    setSubtaskModalOpen(false);
+    setTaskForSubtask(null);
   };
 
   // ✅ FIX: terima finalDeadline dari modal sebagai parameter
@@ -179,6 +206,15 @@ function Todo() {
         }}
       />
 
+      <AddSubtaskModal
+        isOpen={subtaskModalOpen}
+        onClose={() => {
+          setSubtaskModalOpen(false);
+          setTaskForSubtask(null);
+        }}
+        onAdd={addSubtaskDirect}
+      />
+
       <TaskDetail
         selectedTask={selectedTask}
         tasks={tasks}
@@ -203,6 +239,7 @@ function Todo() {
           deleteTask={deleteTask}
           editTask={editTask}
           setDeadline={setDeadline}
+          onAddSubtask={handleAddSubtask}
         />
       ))}
     </div>

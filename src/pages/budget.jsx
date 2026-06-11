@@ -80,7 +80,10 @@ function BudgetBar({ label, icon, color, used, limit, onSetLimit }) {
 }
 
 function Budget() {
-  const [expenses, setExpenses] = useState([]);
+  const [expenses] = useState(() => {
+    const s = localStorage.getItem("resonote-expenses");
+    return s ? JSON.parse(s) : [];
+  });
   const [budgets, setBudgets] = useState(() => {
     const s = localStorage.getItem("resonote-budgets");
     return s ? JSON.parse(s) : {};
@@ -94,10 +97,6 @@ function Budget() {
     return s ? parseInt(s) : 0;
   });
 
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("resonote-expenses")) || [];
-    setExpenses(data);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("resonote-budgets", JSON.stringify(budgets));
